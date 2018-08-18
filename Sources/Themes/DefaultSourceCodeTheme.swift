@@ -65,19 +65,19 @@ extension DefaultSourceEditorTheme: SourceCodeTheme {
 			return .white
 			
 		case .number:
-			return Color(red: 116/255, green: 109/255, blue: 176/255, alpha: 1.0)
+			return #colorLiteral(red: 0.4549019608, green: 0.4274509804, blue: 0.6901960784, alpha: 1)
 			
 		case .string:
-			return Color(red: 211/255, green: 35/255, blue: 46/255, alpha: 1.0)
+			return #colorLiteral(red: 0.7212985475, green: 0.1196540506, blue: 0.1572596093, alpha: 1)
 			
 		case .identifier:
-			return Color(red: 20/255, green: 156/255, blue: 146/255, alpha: 1.0)
+			return #colorLiteral(red: 0.07843137255, green: 0.6117647059, blue: 0.5725490196, alpha: 1)
 			
 		case .keyword:
-			return Color(red: 215/255, green: 0, blue: 143/255, alpha: 1.0)
+			return #colorLiteral(red: 0.7586027038, green: 0.03714548891, blue: 0.5169984272, alpha: 1)
 			
 		case .comment:
-			return Color(red: 69.0/255.0, green: 187.0/255.0, blue: 62.0/255.0, alpha: 1.0)
+			return #colorLiteral(red: 0.03427617372, green: 0.6120745305, blue: 0, alpha: 1)
 			
 		case .editorPlaceholder:
 			return backgroundColor
