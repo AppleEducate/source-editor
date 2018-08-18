@@ -22,8 +22,8 @@ public class MarkdownLexer: MarkupRegexLexer {
 		generators.append(regexGenerator("_.+?_", tokenType: .emphasis))
 		generators.append(regexGenerator("^>\\s+", tokenType: .quote))
 		generators.append(regexGenerator("\\[.+?\\][\\(\\[].*?[\\)\\]]", tokenType: .hyperlink))
-		generators.append(regexGenerator("^(```)$\\n(.|\\n)+^(```)$", tokenType: .code))
-		generators.append(regexGenerator("^(~~~)$\\n(.|\\n)+^(~~~)$", tokenType: .code))
+		generators.append(regexGenerator("^(```)\\w*$\\n(.|\\n)+?^(```)$", tokenType: .code))
+		generators.append(regexGenerator("^(~~~)\\w*$\\n(.|\\n)+?^(~~~)$", tokenType: .code))
 		generators.append(regexGenerator("`.+?`", tokenType: .code))
 		generators.append(regexGenerator("^( {4}|\t).+$", tokenType: .code))
 		
