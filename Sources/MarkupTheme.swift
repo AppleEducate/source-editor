@@ -11,5 +11,7 @@ import SavannaKit
 public protocol MarkupTheme: SyntaxColorTheme {
 	
 	func overrideAttributes(for syntaxColorType: MarkupTokenType) -> [NSAttributedStringKey: Any]
+
+	func color(for markupTokenType: MarkupTokenType) -> Color
 	
 }

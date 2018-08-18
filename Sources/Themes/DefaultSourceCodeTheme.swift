@@ -86,37 +86,53 @@ extension DefaultSourceEditorTheme: SourceCodeTheme {
 }
 
 extension DefaultSourceEditorTheme: MarkupTheme {
+	
 	private static let sectionLevelsCount = 6
 	
 	public func overrideAttributes(for markupTokenType: MarkupTokenType) -> [NSAttributedStringKey : Any] {
 		
+		var attributes: [NSAttributedStringKey : Any] = [.foregroundColor: color(for: markupTokenType)]
+		
 		switch markupTokenType {
 		
 		case .section(level: let level):
-			let pointSize = font.pointSize + CGFloat(DefaultSourceEditorTheme.sectionLevelsCount + 1 - level) * 2
-			let sectionFont = font.withSize(pointSize)
-			return [.font: sectionFont.boldVariant ?? sectionFont, .foregroundColor: #colorLiteral(red: 0.7586027038, green: 0.03714548891, blue: 0.5169984272, alpha: 1)]
+			let sectionFont = font.withSize(scaledBy: pow(1.2, CGFloat(DefaultSourceEditorTheme.sectionLevelsCount + 1 - level)))
+			attributes[.font] = sectionFont.boldVariant ?? sectionFont
 			
 		case .strong:
-			return [.font: font.boldVariant ?? font]
+			attributes[.font] = font.boldVariant ?? font
 			
 		case .emphasis:
-			return [.font: font.italicVariant ?? font]
-			
-		case .hyperlink:
-			return [.foregroundColor: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)]
-			
-		case .bullet:
-			return [.foregroundColor: #colorLiteral(red: 0.07843137255, green: 0.6117647059, blue: 0.5725490196, alpha: 1)]
-			
-		case .quote:
-			return [.foregroundColor: #colorLiteral(red: 0.7212985475, green: 0.1196540506, blue: 0.1572596093, alpha: 1)]
-			
-		case .code:
-			return [.foregroundColor: #colorLiteral(red: 0.4107513034, green: 0.3945278638, blue: 0.5, alpha: 1)]
+			attributes[.font] = font.italicVariant ?? font
 			
 		default:
-			return [:]
+			break
+		}
+		
+		return attributes
+	}
+	
+	public func color(for syntaxColorType: MarkupTokenType) -> Color
+	{
+		switch syntaxColorType {
+			
+		case .section:
+			return #colorLiteral(red: 0.7586027038, green: 0.03714548891, blue: 0.5169984272, alpha: 1)
+			
+		case .hyperlink:
+			return #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+			
+		case .bullet:
+			return #colorLiteral(red: 0.07843137255, green: 0.6117647059, blue: 0.5725490196, alpha: 1)
+			
+		case .quote:
+			return #colorLiteral(red: 0.7212985475, green: 0.1196540506, blue: 0.1572596093, alpha: 1)
+			
+		case .code:
+			return #colorLiteral(red: 0.4107513034, green: 0.3945278638, blue: 0.5, alpha: 1)
+			
+		default:
+			return .white
 		}
 	}
 }
@@ -151,5 +167,11 @@ extension UIFont
 	var italicVariant: UIFont?
 	{
 		return withFirstAvailableVariantFace(["Italic", "Oblique"])
+	}
+	
+	/// Returns a variant of the receiver with the point size scaled by `scale`.
+	func withSize(scaledBy scale: CGFloat) -> UIFont
+	{
+		return withSize(pointSize * scale)
 	}
 }
