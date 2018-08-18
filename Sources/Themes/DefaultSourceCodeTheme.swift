@@ -12,25 +12,33 @@ import SavannaKit
 @available(*, deprecated: 1.0, message: "Use `DefaultSourceEditorTheme` instead")
 public typealias DefaultSourceCodeTheme = DefaultSourceEditorTheme
 
-public struct DefaultSourceEditorTheme: SyntaxColorTheme {
+open class DefaultSourceEditorTheme: SyntaxColorTheme, MarkupTheme, SourceCodeTheme {
+	
+	private static let sectionLevelsCount = 6
+	private static let lineNumbersColor: Color = Color(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
 	
 	public init() {
 		
 	}
 	
-	private static var lineNumbersColor: Color {
-		return Color(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
+	open var lineNumbersStyle: LineNumbersStyle? {
+		return LineNumbersStyle(font: Font(name: "Menlo", size: 16)!,
+								textColor: DefaultSourceEditorTheme.lineNumbersColor)
 	}
 	
-	public let lineNumbersStyle: LineNumbersStyle? = LineNumbersStyle(font: Font(name: "Menlo", size: 16)!, textColor: lineNumbersColor)
+	open var gutterStyle: GutterStyle {
+		return GutterStyle(backgroundColor: Color(red: 21/255.0, green: 22/255, blue: 31/255, alpha: 1.0), minimumWidth: 32)
+	}
 	
-	public let gutterStyle: GutterStyle = GutterStyle(backgroundColor: Color(red: 21/255.0, green: 22/255, blue: 31/255, alpha: 1.0), minimumWidth: 32)
+	open var font: Font {
+		return Font(name: "Menlo", size: 15)!
+	}
 	
-	public let font = Font(name: "Menlo", size: 15)!
+	open var backgroundColor: UIColor {
+		return Color(red: 31/255.0, green: 32/255, blue: 41/255, alpha: 1.0)
+	}
 	
-	public let backgroundColor = Color(red: 31/255.0, green: 32/255, blue: 41/255, alpha: 1.0)
-	
-	public func globalAttributes() -> [NSAttributedStringKey: Any] {
+	open func globalAttributes() -> [NSAttributedStringKey: Any] {
 		
 		var attributes = [NSAttributedStringKey: Any]()
 		
@@ -40,7 +48,7 @@ public struct DefaultSourceEditorTheme: SyntaxColorTheme {
 		return attributes
 	}
 	
-	public func attributes(for token: SavannaKit.Token) -> [NSAttributedStringKey: Any] {
+	open func attributes(for token: SavannaKit.Token) -> [NSAttributedStringKey: Any] {
 		var attributes = [NSAttributedStringKey: Any]()
 		
 		if let token = token as? SimpleSourceCodeToken {
@@ -55,10 +63,8 @@ public struct DefaultSourceEditorTheme: SyntaxColorTheme {
 		
 		return attributes
 	}
-}
 
-extension DefaultSourceEditorTheme: SourceCodeTheme {
-	public func color(for syntaxColorType: SourceCodeTokenType) -> Color {
+	open func color(for syntaxColorType: SourceCodeTokenType) -> Color {
 		
 		switch syntaxColorType {
 		case .plain:
@@ -83,13 +89,8 @@ extension DefaultSourceEditorTheme: SourceCodeTheme {
 			return backgroundColor
 		}
 	}
-}
-
-extension DefaultSourceEditorTheme: MarkupTheme {
 	
-	private static let sectionLevelsCount = 6
-	
-	public func overrideAttributes(for markupTokenType: MarkupTokenType) -> [NSAttributedStringKey : Any] {
+	open func overrideAttributes(for markupTokenType: MarkupTokenType) -> [NSAttributedStringKey : Any] {
 		
 		var attributes: [NSAttributedStringKey : Any] = [.foregroundColor: color(for: markupTokenType)]
 		
@@ -112,7 +113,7 @@ extension DefaultSourceEditorTheme: MarkupTheme {
 		return attributes
 	}
 	
-	public func color(for syntaxColorType: MarkupTokenType) -> Color
+	open func color(for syntaxColorType: MarkupTokenType) -> Color
 	{
 		switch syntaxColorType {
 			
