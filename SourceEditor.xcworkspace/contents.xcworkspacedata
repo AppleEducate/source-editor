@@ -5,9 +5,6 @@
       location = "group:iOS Example/iOS Example.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Dependencies/SavannaKit/SavannaKit.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:SourceEditor.xcodeproj">
    </FileRef>
 </Workspace>
