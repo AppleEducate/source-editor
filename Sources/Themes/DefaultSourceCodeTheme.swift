@@ -9,7 +9,7 @@
 import Foundation
 import SavannaKit
 
-@available(*, deprecated: 1.0, message: "Use `DefaultSourceEditorTheme` instead")
+@available(*, deprecated, message: "Use `DefaultSourceEditorTheme` instead")
 public typealias DefaultSourceCodeTheme = DefaultSourceEditorTheme
 
 open class DefaultSourceEditorTheme: SyntaxColorTheme, MarkupTheme, SourceCodeTheme {
@@ -38,9 +38,9 @@ open class DefaultSourceEditorTheme: SyntaxColorTheme, MarkupTheme, SourceCodeTh
 		return Color(red: 31/255.0, green: 32/255, blue: 41/255, alpha: 1.0)
 	}
 	
-	open func globalAttributes() -> [NSAttributedStringKey: Any] {
+	open func globalAttributes() -> [NSAttributedString.Key: Any] {
 		
-		var attributes = [NSAttributedStringKey: Any]()
+		var attributes = [NSAttributedString.Key: Any]()
 		
 		attributes[.font] = font
 		attributes[.foregroundColor] = Color.white
@@ -48,8 +48,8 @@ open class DefaultSourceEditorTheme: SyntaxColorTheme, MarkupTheme, SourceCodeTh
 		return attributes
 	}
 	
-	open func attributes(for token: SavannaKit.Token) -> [NSAttributedStringKey: Any] {
-		var attributes = [NSAttributedStringKey: Any]()
+	open func attributes(for token: SavannaKit.Token) -> [NSAttributedString.Key: Any] {
+		var attributes = [NSAttributedString.Key: Any]()
 		
 		if let token = token as? SimpleSourceCodeToken {
 			attributes[.foregroundColor] = color(for: token.type)
@@ -90,9 +90,9 @@ open class DefaultSourceEditorTheme: SyntaxColorTheme, MarkupTheme, SourceCodeTh
 		}
 	}
 	
-	open func overrideAttributes(for markupTokenType: MarkupTokenType) -> [NSAttributedStringKey : Any] {
+	open func overrideAttributes(for markupTokenType: MarkupTokenType) -> [NSAttributedString.Key : Any] {
 		
-		var attributes: [NSAttributedStringKey : Any] = [.foregroundColor: color(for: markupTokenType)]
+		var attributes: [NSAttributedString.Key : Any] = [.foregroundColor: color(for: markupTokenType)]
 		
 		switch markupTokenType {
 		
